@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="columns">
+  <div class="column">
+    <h1 class="title">出差统计</h1>
+    <form method="post" action="{{ url_for('business_trip') }}">
+      <div class="field">
+        <div class="control">
+          <textarea rows="20" name="logs" class="textarea" placeholder="姓名  时间  地点">{{ logs }}</textarea>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <input type="submit" value="提交" class="button is-primary">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if user_days %}
+<div class="columns">
+  <div class="column">
+    <h2 class="title">出差天数统计</h2>
+    <table class="table is-bordered">
+      <tr>
+        <th>姓名</th>
+        <th>出差天数</th>
+      </tr>
+      {% for name in user_days %}
+      <tr>
+        <td>{{ name }}</td>
+        <td>{{ user_days[name] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div class="column">
+    <h2 class="title">出差详情</h2>
+    <table class="table is-bordered">
+      <tr>
+        <th>姓名</th>
+        <th>出差天数</th>
+      </tr>
+      {% for name in user_days %}
+      <tr>
+        <td>{{ name }}</td>
+        <td>{{ user_days[name] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
