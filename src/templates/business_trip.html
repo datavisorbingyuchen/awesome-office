@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block body %}
+<h1 class="title">出差统计工具</h1>
 <div class="columns">
   <div class="column">
-    <h1 class="title">出差统计</h1>
     <form method="post" action="{{ url_for('business_trip') }}">
       <div class="field">
         <div class="control">
@@ -16,40 +16,68 @@
       </div>
     </form>
   </div>
+  <div class="column">
+    <em>例子:
+      <p class="content">
+      崔宏宇	2018/6/21 08:00:00	北京-上海
+      <br>
+      崔宏宇	2018/6/22 20:30:00	上海-北京
+      <br>
+      崔宏宇	2018/6/25 20:20:00	北京-上海
+      <br>
+      崔宏宇	2018/6/27 19:55:00	上海-广州
+      <br>
+      崔宏宇	2018/6/29 08:10:00	广州-北京
+      <br>
+      高舒	2018/6/4 07:00:00	北京-上海
+      <br>
+      高舒	2018/6/15 08:25:00	上海-北京
+      </p>
+    </em>
+  </div>
 </div>
 
-{% if user_days %}
 <div class="columns">
-  <div class="column">
-    <h2 class="title">出差天数统计</h2>
+  {% if user_days %}
+  <div class="column is-one-quarter">
+    <h2 class="title">出差天数</h2>
     <table class="table is-bordered">
       <tr>
         <th>姓名</th>
         <th>出差天数</th>
       </tr>
-      {% for name in user_days %}
+      {% for user in user_days.keys() %}
       <tr>
-        <td>{{ name }}</td>
-        <td>{{ user_days[name] }}</td>
+        <td>{{ user }}</td>
+        <td>{{ user_days[user] }}</td>
       </tr>
       {% endfor %}
     </table>
   </div>
-  <div class="column">
+  {% endif %}
+
+  {% if user_trip_details %}
+  <div class="column is-three-quarters">
     <h2 class="title">出差详情</h2>
     <table class="table is-bordered">
       <tr>
         <th>姓名</th>
-        <th>出差天数</th>
+        <th>开始时间</th>
+        <th>结束时间</th>
+        <th>行程</th>
+        <th>天数</th>
       </tr>
-      {% for name in user_days %}
+      {% for detail in user_trip_details %}
       <tr>
-        <td>{{ name }}</td>
-        <td>{{ user_days[name] }}</td>
+        <td>{{ detail.user }}</td>
+        <td>{{ detail.start_time }}</td>
+        <td>{{ detail.end_time }}</td>
+        <td>{{ detail.trip }}</td>
+        <td>{{ detail.days }}</td>
       </tr>
       {% endfor %}
     </table>
   </div>
+  {% endif %}
 </div>
-{% endif %}
 {% endblock %}
